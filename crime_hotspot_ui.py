@@ -5,7 +5,7 @@ import os
 st.set_page_config(layout="wide")
 st.title("🚨 Vancouver Crime Hotspot Map")
 
-# Small description with horizontal line and smaller font
+# Description below title
 st.markdown("""---""", unsafe_allow_html=True)
 st.markdown(
     """
@@ -18,12 +18,17 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Map rendering
+# Map file
 map_file = "vancouver_crime_hotspots_detailed.html"
 
+# Display map in center
 if os.path.exists(map_file):
     with open(map_file, "r", encoding="utf-8") as f:
         map_html = f.read()
-    components.html(map_html, height=700, width=1200)
+    components.html(
+        f"<div style='text-align: center;'>{map_html}</div>",
+        height=700,
+        width=1200,
+    )
 else:
     st.error(f"Map file '{map_file}' not found. Please generate it before running this app.")
