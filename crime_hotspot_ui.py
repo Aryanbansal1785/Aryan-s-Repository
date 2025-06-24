@@ -5,22 +5,22 @@ import os
 st.set_page_config(layout="wide")
 st.title("🚨 Vancouver Crime Hotspot Map")
 
-# Add description right after title
+# Small description with horizontal line and smaller font
+st.markdown("""---""", unsafe_allow_html=True)
 st.markdown(
     """
-    ### 🔍 About This Map  
-    This interactive dashboard identifies and visualizes **crime hotspots** in Vancouver using geospatial clustering.  
-    It supports **patrol route optimization** by analyzing crime intensity, mapping locations to road networks,  
+    <p style='font-size:14px; color: #555;'>
+    This interactive dashboard identifies and visualizes <b>crime hotspots</b> in Vancouver using geospatial clustering.  
+    It supports <b>patrol route optimization</b> by analyzing crime intensity, mapping locations to road networks,  
     and rendering heatmaps and clusters using Folium and OpenStreetMap data.
-    ---
+    </p>
     """,
     unsafe_allow_html=True
 )
 
-# Path to the map HTML file (keep relative path for deployment)
+# Map rendering
 map_file = "vancouver_crime_hotspots_detailed.html"
 
-# Show embedded map
 if os.path.exists(map_file):
     with open(map_file, "r", encoding="utf-8") as f:
         map_html = f.read()
