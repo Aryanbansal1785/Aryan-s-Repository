@@ -6,7 +6,7 @@ from sklearn.model_selection import TimeSeriesSplit, GridSearchCV
 from xgboost import XGBRegressor
 
 
-file_path = "/Users/aryanbansal/Documents/Steeve and Associates/XN-Project_Data.xlsx"
+file_path = "XN-Project_Data.xlsx"
 df = pd.read_excel(file_path)
 preview = df.head()
 
