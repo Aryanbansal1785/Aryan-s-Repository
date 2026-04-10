@@ -31,6 +31,9 @@ Three SQL rules I built caught **8,146 out of 8,213** — a **500x improvement**
 
 **SQL** — 4 queries using CTEs, window functions (`NTILE`, `AVG OVER`, `LAG`), and `CASE WHEN` rules
 
+**PowerBi** — For Visualizations 
+
+
 
 ## Data Sources
 
