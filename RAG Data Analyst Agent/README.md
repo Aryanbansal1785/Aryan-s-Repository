@@ -2,13 +2,12 @@
 
 An AI-powered data analyst that lets you upload any CSV, Excel, or PDF file and ask questions about it in plain English. Built with RAG (Retrieval-Augmented Generation) and AI Agents.
 
----
 
 ## Demo
 
-![DataLens Demo](assets/demo.gif)
+![DataLens Demo](demo.gif)
 
----
+
 
 ## Features
 
@@ -20,9 +19,9 @@ An AI-powered data analyst that lets you upload any CSV, Excel, or PDF file and 
 - **Conversation memory** — Remembers context across multiple questions in the same session
 - **PDF Q&A** — Chat with any PDF document using RAG
 
----
 
-## 🛠️ Tech Stack
+
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -48,7 +47,6 @@ CSV/Excel ──→ db_setup.py ──→ SQLite DB ──→ SQL Agent ──�
 PDF       ──→ rag_setup.py ──→ ChromaDB  ──→ RAG Agent ──→ Answer
 ```
 
----
 
 ## Getting Started
 
@@ -81,7 +79,6 @@ OPENAI_API_KEY=your_api_key_here
 streamlit run app.py
 ```
 
----
 
 ## Project Structure
 
@@ -113,7 +110,6 @@ DataLens/
 - "Summarize the key findings"
 - "What does it say about revenue growth?"
 
----
 
 ## Future Improvements
 
@@ -123,9 +119,8 @@ DataLens/
 - [ ] Add line and pie chart options
 - [ ] Deploy with user authentication
 
----
 
-## 👨‍💻 Author
+## Author
 
 **Aryan Bansal**  
 [LinkedIn](https://linkedin.com/in/aryanbansal1785) • [GitHub](https://github.com/aryanbansal1785)
