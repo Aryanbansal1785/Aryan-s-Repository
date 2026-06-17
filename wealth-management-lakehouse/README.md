@@ -1,7 +1,7 @@
-# 💼 Wealth Management Lakehouse
+# Wealth Management Lakehouse
 ### Medallion Architecture | Databricks | PySpark | Delta Lake
 
-## 📌 Project Overview
+## Project Overview
 A production-style data lakehouse pipeline built on Databricks that 
 analyzes 10,000 retail banking customers across wealth tiers, age 
 segments, and geographies to surface actionable insights for wealth 
@@ -13,7 +13,7 @@ structure their enterprise data platforms.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 ```
 Raw CSV (10,000 Bank Customers, 39 columns)
                     │
@@ -21,25 +21,25 @@ Raw CSV (10,000 Bank Customers, 39 columns)
      ┌──────────────────────────────┐
      │        DATABRICKS            │
      │                              │
-     │  🥉 BRONZE                   │
+     │  BRONZE                   │
      │  Raw ingestion, untouched    │
      │         ↓                    │
-     │  🥈 SILVER                   │
+     │  SILVER                   │
      │  Cleaned + 7 engineered      │
      │  features added              │
      │         ↓                    │
-     │  🥇 GOLD                     │
+     │  GOLD                     │
      │  3 business aggregation      │
      │  tables                      │
      │         ↓                    │
-     │  📊 SQL ANALYSIS             │
+     │  SQL ANALYSIS             │
      │  7 insight queries           │
      └──────────────────────────────┘
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 | Tool | Purpose |
 |------|---------|
 | Databricks (Serverless) | Cloud compute platform |
@@ -50,7 +50,7 @@ Raw CSV (10,000 Bank Customers, 39 columns)
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 | Notebook | What it does |
 |----------|-------------|
 | `01_bronze_ingestion` | Loads raw CSV into Spark, validates schema |
@@ -60,7 +60,7 @@ Raw CSV (10,000 Bank Customers, 39 columns)
 
 ---
 
-## 🔧 Silver Layer — Feature Engineering
+## Silver Layer — Feature Engineering
 7 new features engineered from raw data:
 
 | Feature | Description |
@@ -73,7 +73,7 @@ Raw CSV (10,000 Bank Customers, 39 columns)
 
 ---
 
-## 🥇 Gold Layer — Business Tables
+## Gold Layer — Business Tables
 Three aggregation tables built for business consumption:
 
 **`gold_wealth_tiers`** — Portfolio performance, churn rate, and 
@@ -87,7 +87,7 @@ Spain, and Germany
 
 ---
 
-## 📊 Key Findings
+## Key Findings
 - Customers holding **5+ investment products** churn at half 
   the rate of those with 1–2 products
 - The **40s age group** shows the highest average portfolio 
@@ -100,7 +100,7 @@ Spain, and Germany
 
 ---
 
-## 🚀 How to Replicate
+## How to Replicate
 1. Download dataset: [Wealth Management Customer Data](https://www.kaggle.com/datasets/rgupt44/wealth-management-customer-data)
 2. Upload CSV to Databricks Volume
 3. Run notebooks in order: `01` → `02` → `03` → `04`
@@ -108,7 +108,7 @@ Spain, and Germany
 
 ---
 
-## 💡 Skills Demonstrated
+## Skills Demonstrated
 - Medallion architecture design (Bronze/Silver/Gold)
 - PySpark data cleaning and transformation
 - Feature engineering for financial analytics
@@ -120,7 +120,7 @@ Spain, and Germany
 
 ---
 
-## 👤 Author
+## Author
 **Aryan Bansal**  
 Master of Professional Studies in Analytics — Northeastern University  
 [LinkedIn](https://www.linkedin.com/in/aryan-bansal17/) | 
