@@ -1,19 +1,19 @@
 import pandas as pd
 import numpy as np
+import streamlit as st          # ← move this up here
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import TimeSeriesSplit, GridSearchCV
 from xgboost import XGBRegressor
 
-
-file_path = "XN-Project_Data.xlsx"
+file_path = "/Users/aryanbansal/Documents/Steeve and Associates/XN-Project_Data.xlsx"
 df = pd.read_excel(file_path)
 preview = df.head()
 
 info = df.info()
 stats = df.describe(include='all')
 
-(preview, stats)
+#(preview, stats)
 
 # DATA CLEANING 
 
@@ -119,8 +119,15 @@ if prediction is not None:
 else:
     print(f"No data available for customer '{customer_to_search}'.")
 
+@st.cache_resource
+def load_and_train():
+    df = pd.read_excel(file_path)
+    #cleaning, feature engineering, training
+    return best_model, monthly_features
 
-# --- Streamlit UI ---
+best_model, monthly_features = load_and_train()
+
+# Streamlit UI
 
 import streamlit as st
 
