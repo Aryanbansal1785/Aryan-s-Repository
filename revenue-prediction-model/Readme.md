@@ -23,11 +23,9 @@ This project analyzes historical project billing records (hours worked, billing 
 
 ## Screenshots
 
-| Home Screen | Prediction Output |
-|---|---|
-|<img width="2940" height="946" alt="Screenshot 2026-07-01 at 5 29 26 PM" src="https://github.com/user-attachments/assets/5e2534cb-a4d4-4d55-8663-8115df827cf5" /> 
+<img width="2940" height="946" alt="Screenshot 2026-07-01 at 5 29 26 PM" src="https://github.com/user-attachments/assets/5e2534cb-a4d4-4d55-8663-8115df827cf5" /> 
 
-| <img width="2940" height="946" alt="Screenshot 2026-07-01 at 5 25 21 PM" src="https://github.com/user-attachments/assets/5361904c-51b6-4146-9d7b-600881296990" /> 
+<img width="2940" height="946" alt="Screenshot 2026-07-01 at 5 25 21 PM" src="https://github.com/user-attachments/assets/5361904c-51b6-4146-9d7b-600881296990" /> 
 
 ## Tech Stack
 
