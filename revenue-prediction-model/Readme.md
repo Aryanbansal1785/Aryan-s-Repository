@@ -25,7 +25,8 @@ This project analyzes historical project billing records (hours worked, billing 
 
 | Home Screen | Prediction Output |
 |---|---|
-| ![Home](screenshots/home.png) | ![Prediction](screenshots/prediction.png) |
+|<img width="2940" height="946" alt="Screenshot 2026-07-01 at 5 25 21 PM" src="https://github.com/user-attachments/assets/4faf42e3-9211-4adb-81e2-8eb2f72cf6b8" />
+| <img width="2940" height="946" alt="Screenshot 2026-07-01 at 5 25 21 PM" src="https://github.com/user-attachments/assets/5361904c-51b6-4146-9d7b-600881296990" /> |
 
 ## Tech Stack
 
