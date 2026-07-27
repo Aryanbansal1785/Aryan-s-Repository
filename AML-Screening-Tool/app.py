@@ -3,7 +3,7 @@ app.py
 AML Transaction Screening & Case Management -- Streamlit app.
 
 Three pages:
-  1. Data pipeline  - generates a fresh synthetic batch (or upload one in the
+  1. Data pipeline  - generate a fresh synthetic batch (or upload one in the
                        same schema), see the data quality report, run the
                        detection engine.
   2. Review queue    - work flagged transactions like an AML analyst would:
@@ -11,10 +11,6 @@ Three pages:
   3. Dashboard        - detection volume, precision/recall vs ground truth,
                        rule performance, review throughput.
 """
-
-import subprocess
-import sys
-from datetime import datetime
 
 import os
 import subprocess
@@ -29,6 +25,7 @@ import cleaning
 import detection
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 st.set_page_config(page_title="AML Screening & Case Management", layout="wide")
 db.init_db()
 
@@ -85,7 +82,6 @@ def get_transaction_detail(transaction_id):
         """, conn, params=(tx["account_id"],))
     return tx, flags_df, account_history
 
-
 # Sidebar navigation
 
 st.sidebar.title("AML Screening Tool")
@@ -129,7 +125,7 @@ if page == "Data Pipeline":
 
         issues = [{"issue": k, **v} for k, v in rpt.items() if k != "_summary"]
         if issues:
-            st.dataframe(pd.DataFrame(issues), use_container_width=True, hide_index=True)
+            st.dataframe(pd.DataFrame(issues), width="stretch", hide_index=True)
 
     st.divider()
     st.subheader("Or upload your own file")
@@ -154,7 +150,8 @@ if page == "Data Pipeline":
 
 # Page 2: Review Queue
 
-st.title("Review Queue")
+elif page == "Review Queue":
+    st.title("Review Queue")
     try:
         queue_df = get_queue_df()
         if queue_df.empty:
@@ -163,7 +160,7 @@ st.title("Review Queue")
             st.write(f"**{len(queue_df)}** flagged transactions awaiting review.")
             display_cols = ["transaction_id", "account_id", "ts", "amount", "transaction_type",
                              "rules_triggered", "max_risk_score", "n_rules"]
-            st.dataframe(queue_df[display_cols], use_container_width=True, hide_index=True, height=300)
+            st.dataframe(queue_df[display_cols], width="stretch", hide_index=True, height=300)
             st.divider()
             selected_id = st.selectbox("Select a transaction to review", queue_df["transaction_id"].tolist())
             if selected_id:
@@ -186,7 +183,7 @@ st.title("Review Queue")
                     for _, f in flags_df.iterrows():
                         st.write(f"**{f['rule_name']}** (risk {f['risk_score']}): {f['rule_detail']}")
                 st.subheader("Recent activity on this account")
-                st.dataframe(history, use_container_width=True, hide_index=True)
+                st.dataframe(history, width="stretch", hide_index=True)
                 st.subheader("Decision")
                 reviewer = st.text_input("Reviewer name", value="Aryan Bansal")
                 notes = st.text_area("Notes")
@@ -202,7 +199,6 @@ st.title("Review Queue")
                     st.rerun()
     except Exception as e:
         st.exception(e)
-      
 
 # Page 3: Dashboard
 
