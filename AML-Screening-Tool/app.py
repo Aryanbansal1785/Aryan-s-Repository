@@ -154,58 +154,55 @@ if page == "Data Pipeline":
 
 # Page 2: Review Queue
 
-    st.title("Review Queue")
-
-    queue_df = get_queue_df()
-    if queue_df.empty:
-        st.info("No open flagged transactions. Generate a batch from the Data Pipeline page.")
-    else:
-        st.write(f"**{len(queue_df)}** flagged transactions awaiting review.")
-        display_cols = ["transaction_id", "account_id", "ts", "amount", "transaction_type",
-                         "rules_triggered", "max_risk_score", "n_rules"]
-        st.dataframe(queue_df[display_cols], use_container_width=True, hide_index=True, height=300)
-
-        st.divider()
-        selected_id = st.selectbox("Select a transaction to review", queue_df["transaction_id"].tolist())
-
-        if selected_id:
-            tx, flags_df, history = get_transaction_detail(selected_id)
-
-            colA, colB = st.columns([1, 1])
-            with colA:
-                st.subheader("Transaction")
-                st.write(f"**ID:** {tx['transaction_id']}")
-                st.write(f"**Account:** {tx['account_id']}  |  **Customer:** {tx['customer_id'] or '⚠️ missing'}")
-                st.write(f"**Time:** {tx['ts']}")
-                st.write(f"**Amount:** ${tx['amount']:,.2f} {tx['currency']}")
-                st.write(f"**Type / channel:** {tx['transaction_type']} via {tx['channel']}")
-                st.write(f"**Route:** {tx['origin_country']} -> {tx['destination_country']}")
-                if tx["amount_outlier_flag"]:
-                    st.warning("Data-quality flag: amount is a statistical outlier for this account.")
-                if tx["missing_customer_flag"]:
-                    st.warning("Data-quality flag: customer_id was missing on ingest.")
-
-            with colB:
-                st.subheader("Why it was flagged")
-                for _, f in flags_df.iterrows():
-                    st.write(f"**{f['rule_name']}** (risk {f['risk_score']}): {f['rule_detail']}")
-
-            st.subheader("Recent activity on this account")
-            st.dataframe(history, use_container_width=True, hide_index=True)
-
-            st.subheader("Decision")
-            reviewer = st.text_input("Reviewer name", value="Aryan Bansal")
-            notes = st.text_area("Notes")
-            d1, d2, d3 = st.columns(3)
-            if d1.button("Clear (false positive)"):
-                db.record_decision(selected_id, "cleared", reviewer, notes)
-                st.rerun()
-            if d2.button("Escalate for further review"):
-                db.record_decision(selected_id, "escalated", reviewer, notes)
-                st.rerun()
-            if d3.button("Confirm SAR-worthy", type="primary"):
-                db.record_decision(selected_id, "confirmed_sar", reviewer, notes)
-                st.rerun()
+st.title("Review Queue")
+    try:
+        queue_df = get_queue_df()
+        if queue_df.empty:
+            st.info("No open flagged transactions. Generate a batch from the Data Pipeline page.")
+        else:
+            st.write(f"**{len(queue_df)}** flagged transactions awaiting review.")
+            display_cols = ["transaction_id", "account_id", "ts", "amount", "transaction_type",
+                             "rules_triggered", "max_risk_score", "n_rules"]
+            st.dataframe(queue_df[display_cols], use_container_width=True, hide_index=True, height=300)
+            st.divider()
+            selected_id = st.selectbox("Select a transaction to review", queue_df["transaction_id"].tolist())
+            if selected_id:
+                tx, flags_df, history = get_transaction_detail(selected_id)
+                colA, colB = st.columns([1, 1])
+                with colA:
+                    st.subheader("Transaction")
+                    st.write(f"**ID:** {tx['transaction_id']}")
+                    st.write(f"**Account:** {tx['account_id']}  |  **Customer:** {tx['customer_id'] or '⚠️ missing'}")
+                    st.write(f"**Time:** {tx['ts']}")
+                    st.write(f"**Amount:** ${tx['amount']:,.2f} {tx['currency']}")
+                    st.write(f"**Type / channel:** {tx['transaction_type']} via {tx['channel']}")
+                    st.write(f"**Route:** {tx['origin_country']} -> {tx['destination_country']}")
+                    if tx["amount_outlier_flag"]:
+                        st.warning("Data-quality flag: amount is a statistical outlier for this account.")
+                    if tx["missing_customer_flag"]:
+                        st.warning("Data-quality flag: customer_id was missing on ingest.")
+                with colB:
+                    st.subheader("Why it was flagged")
+                    for _, f in flags_df.iterrows():
+                        st.write(f"**{f['rule_name']}** (risk {f['risk_score']}): {f['rule_detail']}")
+                st.subheader("Recent activity on this account")
+                st.dataframe(history, use_container_width=True, hide_index=True)
+                st.subheader("Decision")
+                reviewer = st.text_input("Reviewer name", value="Aryan Bansal")
+                notes = st.text_area("Notes")
+                d1, d2, d3 = st.columns(3)
+                if d1.button("Clear (false positive)"):
+                    db.record_decision(selected_id, "cleared", reviewer, notes)
+                    st.rerun()
+                if d2.button("Escalate for further review"):
+                    db.record_decision(selected_id, "escalated", reviewer, notes)
+                    st.rerun()
+                if d3.button("Confirm SAR-worthy", type="primary"):
+                    db.record_decision(selected_id, "confirmed_sar", reviewer, notes)
+                    st.rerun()
+    except Exception as e:
+        st.exception(e)
+      
 
 # Page 3: Dashboard
 
