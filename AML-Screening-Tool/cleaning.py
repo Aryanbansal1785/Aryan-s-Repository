@@ -3,11 +3,7 @@ cleaning.py
 Data validation & cleaning pipeline. Takes a raw, messy transaction export
 (as produced by generator.py, or as a real bank export would look) and
 produces a clean dataframe ready for the detection engine, plus a
-data-quality report describing exactly what was fixed or dropped.
-
-This step exists because production data is never clean, and reviewers /
-interviewers will ask "how do you know your detection numbers are
-trustworthy if the input data has problems?" -- this module is the answer.
+data quality report describing exactly what was fixed or dropped.
 """
 
 import re
