@@ -1,19 +1,12 @@
 """
-detection.py
-Rule-based AML/fraud detection engine. Implemented as hand-written SQL
-(CTEs + window functions) against SQLite, not pandas -- this is the same
-technique referenced on the resume ("Designed and validated 3 rule-based
-detection algorithms using CTEs and window functions") applied to a live
-system instead of a one-off notebook.
-
 Five rules, each a distinct AML typology:
   1. structuring     -- SUM()/COUNT() OVER, multiple deposits under the
                          reporting threshold summing above it in one day
   2. velocity         -- COUNT() OVER ... RANGE BETWEEN (trailing 1h window)
   3. round_dollar     -- large round-number wires/transfers (layering signal)
-  4. high_risk_geo    -- counterparty in a high-risk jurisdiction
+  4. high_risk_geo    -- counterparty in a high risk jurisdiction
   5. layering         -- LEAD() OVER, large deposit followed quickly by a
-                         near-equal outbound transfer
+                         near equal outbound transfer
 """
 
 import sqlite3
