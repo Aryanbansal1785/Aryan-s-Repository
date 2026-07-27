@@ -1,11 +1,3 @@
-"""
-db.py
-SQLite persistence layer. Plain sqlite3 (stdlib) rather than an ORM, on
-purpose: the whole point of this project is to demonstrate hand-written SQL
-(CTEs, window functions) for the detection engine, and an ORM would hide
-exactly the skill this project is meant to showcase.
-"""
-
 import sqlite3
 from contextlib import contextmanager
 
