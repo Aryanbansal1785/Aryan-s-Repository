@@ -3,8 +3,8 @@ app.py
 AML Transaction Screening & Case Management -- Streamlit app.
 
 Three pages:
-  1. Data pipeline  - generate a fresh synthetic batch (or upload one in the
-                       same schema), see the data-quality report, run the
+  1. Data pipeline  - generates a fresh synthetic batch (or upload one in the
+                       same schema), see the data quality report, run the
                        detection engine.
   2. Review queue    - work flagged transactions like an AML analyst would:
                        see the evidence, clear or escalate, leave notes.
