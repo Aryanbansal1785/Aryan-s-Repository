@@ -28,13 +28,11 @@ import db
 import cleaning
 import detection
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 st.set_page_config(page_title="AML Screening & Case Management", layout="wide")
 db.init_db()
 
-
-# ---------------------------------------------------------------------------
 # Helpers
-# ---------------------------------------------------------------------------
 
 def run_pipeline(n_accounts, n_days, seed):
     subprocess.run(
@@ -88,9 +86,7 @@ def get_transaction_detail(transaction_id):
     return tx, flags_df, account_history
 
 
-# ---------------------------------------------------------------------------
 # Sidebar navigation
-# ---------------------------------------------------------------------------
 
 st.sidebar.title("AML Screening Tool")
 page = st.sidebar.radio("Go to", ["Data Pipeline", "Review Queue", "Dashboard"])
@@ -100,9 +96,7 @@ with db.get_conn() as _conn:
 st.sidebar.caption(f"{_n_tx:,} transactions currently loaded")
 
 
-# ---------------------------------------------------------------------------
 # Page 1: Data Pipeline
-# ---------------------------------------------------------------------------
 
 if page == "Data Pipeline":
     st.title("Data Pipeline")
@@ -158,11 +152,8 @@ if page == "Data Pipeline":
         st.rerun()
 
 
-# ---------------------------------------------------------------------------
 # Page 2: Review Queue
-# ---------------------------------------------------------------------------
 
-elif page == "Review Queue":
     st.title("Review Queue")
 
     queue_df = get_queue_df()
@@ -216,10 +207,7 @@ elif page == "Review Queue":
                 db.record_decision(selected_id, "confirmed_sar", reviewer, notes)
                 st.rerun()
 
-
-# ---------------------------------------------------------------------------
 # Page 3: Dashboard
-# ---------------------------------------------------------------------------
 
 elif page == "Dashboard":
     st.title("Dashboard")
