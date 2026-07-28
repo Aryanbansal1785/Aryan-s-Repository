@@ -11,6 +11,8 @@ Monitoring* project (Python/SQL, 6.3M transactions, 99.79% rule-based
 detection accuracy) into an operational system with a UI, a database, and
 an analyst workflow, instead of a one-time notebook analysis.
 
+**Live demo:** https://aml-screening-tool.streamlit.app
+
 ## Why the data is synthetic
 
 The app runs on a synthetic transaction generator rather than a static
