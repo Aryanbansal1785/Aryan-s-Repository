@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from file_handler import handle_file
+from file_setup import handle_file
 from agent import ask_sql_agent, ask_rag_agent, generate_auto_summary
 import tempfile
 import os
