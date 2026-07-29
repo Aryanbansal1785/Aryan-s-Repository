@@ -2,11 +2,11 @@
 
 An AI-powered data analyst that lets you upload any CSV, Excel, or PDF file and ask questions about it in plain English. Built with RAG (Retrieval-Augmented Generation) and AI Agents.
 
+**Link:** https://aryan-s-dataanalystagent.streamlit.app
 
 ## Demo
 
 ![DataLens Demo](demo.gif)
-
 
 
 ## Features
