@@ -1,0 +1,6 @@
+txn_id,account_id,amount,currency,txn_date,merchant,country,province
+T0001,A1001,100.00,USD,2023/12/01,Acme Store,USA,CA
+T0002,A1002,250,USD,12-02-2023,BestBuy,United States,California
+T0003,A1003,,USD,2023-12-03,Example Mart,US,ca
+T0004,A1004,15.5,USD,03 Dec 2023,Corner Shop,Canada,ON
+T0005,A1005,999.99,USD,2023-12-01,Acme Store,United States of America,CA
