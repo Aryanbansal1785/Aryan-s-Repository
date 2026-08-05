@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+env/
+
+# env files
+.env
+
+# Jupyter
+.ipynb_checkpoints
+
+# macOS
+.DS_Store
+
+# Streamlit
+.streamlit/
+
+# Test / coverage
+htmlcov/
+.coverage
+
+# distribution
+dist/
+build/
+
+# local data
+ai-assisted-data-cleaning/sample_data/
