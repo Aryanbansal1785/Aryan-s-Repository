@@ -1,7 +1,3 @@
-"""
-Pipeline stub: deterministic application of approved rules to a DataFrame.
-Only simple actions implemented for demo: date standardization and province normalization.
-"""
 import pandas as pd
 from dateutil import parser
 
@@ -29,6 +25,37 @@ def apply_normalize_province(df: pd.DataFrame, column: str) -> pd.DataFrame:
         k = str(x).strip().lower()
         return mapping.get(k, x)
     df[column + '_before'] = df[column]
+    df[column] = df[column].apply(norm)
+    return df
+
+
+def apply_normalize_categorical(df: pd.DataFrame, column: str) -> pd.DataFrame:
+    """Generic categorical normalizer for any column on any dataset.
+
+    Groups values that are the same after stripping whitespace and lowercasing,
+    then maps every value in a group to that group's most frequent original spelling.
+    E.g. ["CA", "ca", "California "] with "CA" appearing most often all become "CA".
+    """
+    df[column + '_before'] = df[column]
+
+    def _key(x):
+        if pd.isna(x):
+            return None
+        return str(x).strip().lower()
+
+    non_null = df[column].dropna()
+    if non_null.empty:
+        return df
+
+    canonical = {}
+    for key, group in non_null.groupby(non_null.map(_key)):
+        canonical[key] = group.value_counts().idxmax()
+
+    def norm(x):
+        if pd.isna(x):
+            return x
+        return canonical.get(_key(x), x)
+
     df[column] = df[column].apply(norm)
     return df
 
