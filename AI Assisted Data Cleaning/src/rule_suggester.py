@@ -1,4 +1,19 @@
+"""
+Rule suggester: analyzes a profile dict (from profiler.profile_dataframe) and proposes
+data-cleaning rules.
 
+This is a deterministic, rule-based "AI" (no external model call yet) — it looks at
+column stats and guesses what needs cleaning. It works generically on ANY DataFrame,
+not just the built-in demo columns, so it can drive suggestions for uploaded datasets too.
+
+Detection heuristics:
+- Date-like columns: most sampled values parse as dates, but more than one distinct
+  format shows up -> suggest standardizing to ISO 8601.
+- Inconsistent categorical columns: values collapse to fewer distinct entries once you
+  strip whitespace and lowercase them (e.g. "CA", "ca", "California ") -> suggest
+  normalizing to a canonical form.
+- Any column with missing values -> suggest flagging them for human review.
+"""
 from typing import List, Dict
 import re
 from dateutil import parser as dateparser
