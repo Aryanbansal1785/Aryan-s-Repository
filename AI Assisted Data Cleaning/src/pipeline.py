@@ -1,3 +1,13 @@
+"""
+Pipeline: deterministic application of approved rules to a DataFrame.
+
+apply_standardize_date_iso and apply_flag_missing are fully generic — they work on
+any column name. apply_normalize_province keeps the original hand-written mapping for
+the demo's built-in province column (kept for backwards compatibility with existing
+tests). apply_normalize_categorical is a generic replacement that works on ANY
+categorical column: it groups values that are identical once you strip whitespace and
+lowercase them, and rewrites each group to its most common original spelling.
+"""
 import pandas as pd
 from dateutil import parser
 
