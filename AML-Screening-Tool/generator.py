@@ -8,12 +8,10 @@ number of injected AML/fraud patterns (ground truth), so detection accuracy
 (precision/recall) can be measured honestly against something we control.
 
 Ground truth columns (is_fraud, pattern) are written to a separate
-answer-key file (ground_truth.csv) -- they are NOT included in the raw file
-an "analyst" would work from, because a real analyst never sees the answer
-key up front.
+answer-key file (ground_truth.csv) they are NOT included in the raw file.
 
 Usage:
-    python generator.py --accounts 400 --days 45 --seed 42
+    python generator.py - accounts 400 - days 45 - seed 42
 """
 
 import argparse
@@ -22,9 +20,7 @@ import random
 import uuid
 from datetime import datetime, timedelta
 
-# ---------------------------------------------------------------------------
 # Config / reference data
-# ---------------------------------------------------------------------------
 
 LOW_RISK_COUNTRIES = ["US", "CA", "UK", "DE", "FR", "AU", "JP", "SG", "NL", "IE"]
 # Placeholder codes standing in for FATF-monitored / high-risk jurisdictions.
@@ -49,9 +45,7 @@ def new_id(prefix, n):
     return f"{prefix}{n:07d}"
 
 
-# ---------------------------------------------------------------------------
 # Accounts
-# ---------------------------------------------------------------------------
 
 def generate_accounts(rng, n_accounts):
     """Create the account population. A small % are pre-designated 'bad
@@ -81,9 +75,7 @@ def generate_accounts(rng, n_accounts):
     return accounts
 
 
-# ---------------------------------------------------------------------------
 # Baseline "normal" activity
-# ---------------------------------------------------------------------------
 
 def generate_normal_transactions(rng, accounts, start_date, n_days, counter):
     rows = []
@@ -113,9 +105,7 @@ def generate_normal_transactions(rng, accounts, start_date, n_days, counter):
     return rows
 
 
-# ---------------------------------------------------------------------------
 # Injected AML / fraud patterns (ground truth = True)
-# ---------------------------------------------------------------------------
 
 def inject_structuring(rng, accounts, start_date, n_days, counter):
     """Multiple cash deposits just under $10k reporting threshold, same
@@ -269,9 +259,7 @@ def inject_lookalikes(rng, accounts, start_date, n_days, counter):
     return rows
 
 
-# ---------------------------------------------------------------------------
 # Messiness: real bank exports are never this clean
-# ---------------------------------------------------------------------------
 
 def apply_messiness(rng, rows):
     rows = [dict(r) for r in rows]  # copy
@@ -320,9 +308,7 @@ def format_timestamp_messy(rng, ts):
     return ts.strftime(fmt)
 
 
-# ---------------------------------------------------------------------------
 # Main
-# ---------------------------------------------------------------------------
 
 def main():
     ap = argparse.ArgumentParser()
