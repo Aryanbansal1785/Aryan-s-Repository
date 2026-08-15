@@ -10,7 +10,7 @@ rule is versioned and logged to an audit trail.
 
 ## Demo
 
-![Demo](assets/demo.gif)
+![Demo](assets/demo-v2.gif)
 
 ## What it does
 
