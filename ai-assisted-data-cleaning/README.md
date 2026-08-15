@@ -4,6 +4,10 @@ A lightweight, demoable implementation (Python + pandas + Streamlit + SQLite) of
 
 Instead of silently transforming a dataset, the app profiles whatever CSV you give it, proposes specific cleaning rules for the issues it finds, and requires a human reviewer to explicitly Approve, Preview, or Reject each one before anything is applied. Every approved rule is versioned and logged to an audit trail.
 
+## Demo
+
+![Demo](assets/demo.gif)
+
 # What it does
 
 Upload any CSV, or use the built-in synthetic sample data generator
