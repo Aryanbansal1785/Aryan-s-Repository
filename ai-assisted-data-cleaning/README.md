@@ -1,21 +1,62 @@
 # AI Assisted Data Cleaning and Standardization Pipeline
 
-This repository folder contains a lightweight, demoable implementation (pandas + SQLite) of the AI Assisted Data Cleaning and Standardization Pipeline.
+A lightweight, demoable implementation (Python + pandas + Streamlit + SQLite) of an
+**"AI proposes, human approves, rules versioned"** workflow for cleaning messy tabular data.
 
-Goals
-- Demonstrate an "AI proposes, human approves, rules versioned" flow.
-- Provide a Streamlit UI for human review of AI-proposed rules.
-- Persist approved rules and an audit trail in SQLite.
+Instead of silently transforming a dataset, the app profiles whatever CSV you give it,
+proposes specific cleaning rules for the issues it finds, and requires a human reviewer to
+explicitly Approve, Preview, or Reject each one before anything is applied. Every approved
+rule is versioned and logged to an audit trail.
 
-Status
-- Scaffold pushed. Next: implement the synthetic transactions generator and unit tests.
+## Demo
 
-How to run (local dev)
-1. python -m venv .venv
-2. source .venv/bin/activate  # or .venv\Scripts\activate on Windows
-3. pip install -r requirements.txt
-4. copy .env.example to .env if you want to provide an OpenAI API key. If you do not provide a key the app runs in MOCK mode.
-5. streamlit run streamlit_app.py
+![Demo](assets/demo.gif)
 
-Notes
+## What it does
+
+- **Upload any CSV**, or use the built-in synthetic sample data generator
+- **Detects issues automatically**, computed over the full dataset (not just a sample), so it
+  works reliably on large files:
+  - Inconsistent date formats within a column → proposes standardizing to ISO 8601
+  - Near-duplicate categorical values (casing/whitespace, e.g. `"CA"` vs `"ca"` vs `"California "`)
+    → proposes normalizing to one canonical spelling
+  - Missing values in any column → flags them, and lets the reviewer choose how to handle them
+    (fill with mean, median, mode, a custom value, or drop the affected rows)
+- **Nothing is auto-applied.** Every proposal has to be explicitly approved by a human before
+  it's used, and "Apply (preview)" always shows the actual rows a rule would change — not just
+  the first few rows of the file
+- **Versioned, auditable rules.** Approved rules are stored in SQLite with a version number and
+  reviewer name; every pipeline run logs which rule, which version, and how many rows were
+  touched
+- **Run the full pipeline** on all approved rules at once and download the cleaned CSV
+
+## Tested at scale
+
+Validated against a real ~13,700-row project billing dataset (not just the synthetic demo
+data), correctly surfacing genuine issues — casing-inconsistent customer/project names and
+95 missing project records — that a naive "check the first few rows" approach would have
+missed entirely.
+
+## How to run (local dev)
+
+```bash
+python -m venv .venv
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+## Project structure
+## Current limitations / roadmap
+
+- Rule suggestions are currently **deterministic** (statistical profiling + heuristics), not
+  backed by a live LLM call. The `rule_suggester.py` module is isolated specifically so this
+  can be swapped in later without touching the rest of the app.
+- Categorical normalization groups values by casing/whitespace only — it won't merge
+  semantically-equivalent but differently-worded values (e.g. `"USA"` vs `"United States"`).
+- Date-format detection relies on `dateutil`'s default parsing, which can occasionally
+  misread ambiguous day/month order (e.g. `01-06-2021`).
+
+## Notes
+
 - Do not add secrets in code. Use environment variables or GitHub Secrets for CI.
